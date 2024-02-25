@@ -22,7 +22,10 @@ class MainScreen extends StatelessWidget {
                   Navigator.pushNamed(context,
                       '/vstrkvpolina'); // на одну страницу накладывается другая
                 },
-                child: const Text('Bar')), // bar
+                child: const Text(
+                  'Bar',
+                  style: TextStyle(color: Color.fromARGB(255, 12, 28, 54)),
+                )), // bar
           ],
         ));
   }

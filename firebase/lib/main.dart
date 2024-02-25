@@ -1,8 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:firebase/home.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase/homed.dart';
 import 'package:firebase/main_screen.dart';
 
-void main() => runApp(MaterialApp(
+void main() {
+  // FlutterError.onError = (details) { // не работает(
+  //   FlutterError.presentError(details);
+  //   if (kReleaseMode) exit(1);
+  // };
+   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: const Color.fromARGB(255, 12, 28, 54),
@@ -10,9 +16,10 @@ void main() => runApp(MaterialApp(
       initialRoute: '/',
       routes: {
         '/': (context) => const MainScreen(),
-        '/vstrkvpolina': (context) => const Home(),
+        '/vstrkvpolina': (context) =>const Home(),
       },
     ));
+}
 
 // void InitFirebase() async {
 //   WidgetsFlutterBinding.ensureInitialized();
