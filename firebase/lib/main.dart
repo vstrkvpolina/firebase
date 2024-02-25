@@ -1,6 +1,5 @@
 import 'package:firebase/home.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase/homed.dart';
 import 'package:firebase/main_screen.dart';
 
 void main() {

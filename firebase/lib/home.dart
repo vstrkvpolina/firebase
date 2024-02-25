@@ -1,3 +1,4 @@
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,8 +21,6 @@ class _HomeState extends State<Home> {
     await Firebase.initializeApp();
   }
 
-  
-
   @override
   void initState() {
     // TODO: implement initState
@@ -30,29 +29,30 @@ class _HomeState extends State<Home> {
     initFirebase();
 
     vstrkvpolina.addAll(['Born house', 'build tree', 'imprison son']);
-
   }
 
-  void _menuOpen(){
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('Menu,bruhh'),),
-            body: Row(
-              children: [
-                ElevatedButton(onPressed: () {
+  void _menuOpen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Menu,bruhh'),
+        ),
+        body: Row(
+          children: [
+            ElevatedButton(
+                onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-                }, 
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/', (route) => false);
+                },
                 child: const Text('bruh')),
-                const Padding(padding: EdgeInsets.only(left: 15)),
-                const Text('Menu, bitch'),
-              ],
-            ),
-          );
-        })
-    );
+            const Padding(padding: EdgeInsets.only(left: 15)),
+            const Text('Menu, bitch'),
+          ],
+        ),
+      );
+    }));
   }
 
   @override
@@ -65,106 +65,87 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: _menuOpen, 
-            icon: const Icon(Icons.menu_book_rounded))
+              onPressed: _menuOpen, icon: const Icon(Icons.menu_book_rounded))
         ],
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('MyCollection').snapshots(),
+        stream:
+            FirebaseFirestore.instance.collection('MyCollection').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) return const Text('No entries');
           return ListView.builder(
-          itemCount: snapshot.data?.docs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Dismissible(
-                key: Key(snapshot.data!.docs[index].id),
-                child: Card(
-                  child: ListTile(
-                    title: Text(snapshot.data!.docs[index].get('MyCollection')),
-                    trailing: IconButton(
-                      icon: const Icon( 
-                      Icons.delete,
-                      color:  Color.fromARGB(255, 12, 28, 54),
-                      ), 
-                      onPressed: () { 
-                         FirebaseFirestore.instance.collection('MyCollection').doc(snapshot.data!.docs[index].id).delete();
-                       },
-                    ) ,
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Dismissible(
+                  key: Key(snapshot.data!.docs[index].id),
+                  child: Card(
+                    child: ListTile(
+                      title:
+                          Text(snapshot.data!.docs[index].get('MyCollection')),
+                      trailing: IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Color.fromARGB(255, 12, 28, 54),
+                        ),
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection('MyCollection')
+                              .doc(snapshot.data!.docs[index].id)
+                              .delete();
+                        },
+                      ),
+                    ),
                   ),
-                ),
-                onDismissed: (direction) {
-                  //if(direction == DismissDirection.endToStart)
-                  FirebaseFirestore.instance.collection('MyCollection').doc(snapshot.data!.docs[index].id).delete();
-                },
+                  onDismissed: (direction) {
+                    //if(direction == DismissDirection.endToStart)
+                    FirebaseFirestore.instance
+                        .collection('MyCollection')
+                        .doc(snapshot.data!.docs[index].id)
+                        .delete();
+                  },
                 );
-          });
+              });
         },
       ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor:const Color.fromARGB(255, 12, 28, 54),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return  AlertDialog(
-                    title: const Text ('Add'),
-                    content: TextField(
-                      onChanged: (String value) {
-                        setState(() {
-                          _userDatabase = value;
-                        });
-                      },
-                    ),
-                    actions: [
-                      ElevatedButton(onPressed:(){
-                        FirebaseFirestore.instance.collection('MyCollection').add({'Man': _userDatabase});
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 12, 28, 54),
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Add'),
+                  content: TextField(
+                    onChanged: (String value) {
+                      setState(() {
+                        _userDatabase = value;
+                      });
+                    },
+                  ),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection('MyCollection')
+                              .add({'Man': _userDatabase});
 
-                        // setState(() {
-                        //   vstrkvpolina.add(_userDatabase);
-                        // });
+                          // setState(() {
+                          //   vstrkvpolina.add(_userDatabase);
+                          // });
 
-                        Navigator.of(context).pop();
-                      }, child: const Text('add some thing'))
-                    ],
-                  );
-                }
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('add some thing'))
+                  ],
                 );
-            },
-            child: const Icon(
-              Icons.heart_broken_rounded,
-              color:  Color.fromARGB(255, 131, 148, 171),
-            ) ,
-          ),
+              });
+        },
+        child: const Icon(
+          Icons.heart_broken_rounded,
+          color: Color.fromARGB(255, 131, 148, 171),
+        ),
+      ),
     );
   }
 }
 
-// ListView.builder(
-//           itemCount: vstrkvpolina.length,
-//           itemBuilder: (BuildContext context, int index) {
-//             return Dismissible(
-//                 key: Key(vstrkvpolina[index]),
-//                 child: Card(
-//                   child: ListTile(
-//                     title: Text(vstrkvpolina[index]),
-//                     trailing: IconButton(
-//                       icon: const Icon( 
-//                       Icons.delete,
-//                       color:  Color.fromARGB(255, 12, 28, 54),
-//                       ), 
-//                       onPressed: () { 
-//                          setState(() {
-//                            vstrkvpolina.removeAt(index);
-//                          });
-//                        },
-//                     ) ,
-//                   ),
-//                 ),
-//                 onDismissed: (direction) {
-//                   //if(direction == DismissDirection.endToStart)
-//                   setState(() {
-//                     vstrkvpolina.removeAt(index);
-//                   });
-//                 },
-//                 );
-//           }),
