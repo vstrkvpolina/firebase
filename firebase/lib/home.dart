@@ -61,7 +61,9 @@ class _HomeState extends State<Home> {
       backgroundColor: const Color.fromARGB(255, 205, 214, 227),
       appBar: AppBar(
         title: const Text(
-            'A list of important things if you think there\'s something important in your life, duhh'),
+            'A list of important things if you think there\'s something important in your life, duhh',
+            style: TextStyle(fontFamily: 'Arial Black', color: Color.fromARGB(255, 224, 227, 232)),
+            ),
         centerTitle: true,
         actions: [
           IconButton(
@@ -135,7 +137,9 @@ class _HomeState extends State<Home> {
 
                           Navigator.of(context).pop();
                         },
-                        child: const Text('add some thing'))
+                        child: const Text('add some thing',
+                        style: TextStyle(fontFamily: 'Arial Black', color: Color.fromARGB(255, 224, 227, 232)),
+                        ))
                   ],
                 );
               });
